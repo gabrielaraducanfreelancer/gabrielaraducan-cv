@@ -1,0 +1,577 @@
+@extends('layouts.app')
+
+@section('title', 'Gabriela Raducan - Senior PHP Developer')
+
+@push('styles')
+<style>
+    :root {
+        --accent: #F0A500;
+        --sidebar-bg: #3D3D3D;
+        --sidebar-text: #ffffff;
+        --main-bg: #ffffff;
+        --main-text: #333333;
+        --light-gray: #e0e0e0;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Open Sans', sans-serif;
+        background: #f0f0f0;
+        color: var(--main-text);
+        line-height: 1.6;
+    }
+
+    .cv-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        display: flex;
+        min-height: 100vh;
+        background: var(--main-bg);
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+        width: 320px;
+        min-width: 320px;
+        background: var(--sidebar-bg);
+        color: var(--sidebar-text);
+        padding: 40px 28px;
+    }
+
+    .profile-photo {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+        display: block;
+        margin: 0 auto 30px;
+    }
+
+    .sidebar-section {
+        margin-bottom: 28px;
+    }
+
+    .sidebar-section h3 {
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 16px;
+        color: var(--sidebar-text);
+    }
+
+    .sidebar-divider {
+        border: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.25);
+        margin: 24px 0;
+    }
+
+    /* Contact */
+    .contact-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 10px;
+        font-size: 13px;
+        gap: 10px;
+    }
+
+    .contact-icon {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        margin-top: 3px;
+        fill: var(--accent);
+    }
+
+    .contact-item a {
+        color: var(--sidebar-text);
+        text-decoration: none;
+    }
+
+    .contact-item a:hover {
+        color: var(--accent);
+    }
+
+    /* Skills */
+    .skill-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 6px;
+        font-size: 13px;
+    }
+
+    .skill-name {
+        font-weight: 400;
+    }
+
+    .skill-years {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 12px;
+    }
+
+    /* Education */
+    .education-entry {
+        margin-bottom: 14px;
+    }
+
+    .education-entry .school {
+        font-weight: 700;
+        font-size: 13px;
+    }
+
+    .education-entry .degree {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.85);
+    }
+
+    .education-entry .year {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* ── Main Content ── */
+    .main-content {
+        flex: 1;
+        padding: 40px 45px;
+    }
+
+    .name-header h1 {
+        font-size: 42px;
+        font-weight: 300;
+        color: var(--main-text);
+        line-height: 1.1;
+        margin-bottom: 4px;
+    }
+
+    .name-header h1 strong {
+        font-weight: 700;
+    }
+
+    .name-header .subtitle {
+        font-size: 15px;
+        color: #666;
+        font-style: italic;
+        margin-bottom: 28px;
+    }
+
+    .section-title {
+        font-size: 16px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 18px;
+        margin-top: 30px;
+        color: var(--main-text);
+    }
+
+    .section-title:first-of-type {
+        margin-top: 0;
+    }
+
+    /* About Me */
+    .about-me {
+        font-size: 13.5px;
+        line-height: 1.7;
+        color: #555;
+        margin-bottom: 10px;
+        border-left: 3px solid var(--accent);
+        padding-left: 15px;
+    }
+
+    .about-me p {
+        margin-bottom: 8px;
+    }
+
+    .about-me strong {
+        color: var(--main-text);
+    }
+
+    /* Experience */
+    .experience-entry {
+        margin-bottom: 26px;
+        page-break-inside: avoid;
+    }
+
+    .experience-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        margin-bottom: 2px;
+    }
+
+    .experience-header .role {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--main-text);
+    }
+
+    .experience-header .dates {
+        font-size: 13px;
+        color: var(--accent);
+        font-weight: 600;
+    }
+
+    .experience-company {
+        font-size: 13px;
+        color: var(--accent);
+        font-weight: 600;
+        margin-bottom: 6px;
+    }
+
+    .experience-description {
+        font-size: 13px;
+        color: #555;
+        line-height: 1.6;
+        margin-bottom: 8px;
+    }
+
+    .experience-highlights {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 8px;
+    }
+
+    .experience-highlights li {
+        font-size: 13px;
+        color: #555;
+        line-height: 1.6;
+        padding-left: 18px;
+        position: relative;
+        margin-bottom: 6px;
+    }
+
+    .experience-highlights li::before {
+        content: '\25BA';
+        position: absolute;
+        left: 0;
+        color: var(--accent);
+        font-size: 10px;
+        top: 3px;
+    }
+
+    .experience-highlights li strong {
+        color: var(--main-text);
+    }
+
+    .experience-skills {
+        font-size: 12px;
+        color: #888;
+        line-height: 1.5;
+    }
+
+    .experience-skills strong {
+        color: #666;
+    }
+
+    /* ── Print ── */
+    @media print {
+        body {
+            background: white;
+        }
+
+        .cv-container {
+            box-shadow: none;
+            max-width: 100%;
+        }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+        .cv-container {
+            flex-direction: column;
+        }
+
+        .sidebar {
+            width: 100%;
+            min-width: 100%;
+            padding: 30px 24px;
+        }
+
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+        }
+
+        .main-content {
+            padding: 30px 24px;
+        }
+
+        .name-header h1 {
+            font-size: 32px;
+        }
+    }
+</style>
+@endpush
+
+@section('content')
+<div class="cv-container">
+    {{-- ── Sidebar ── --}}
+    <aside class="sidebar">
+        <img src="{{ asset('images/profile.jpg') }}" alt="Gabriela Raducan" class="profile-photo">
+
+        <div class="sidebar-section">
+            <h3>Contact</h3>
+            <div class="contact-item">
+                <svg class="contact-icon" viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.24 1.02l-2.2 2.2z"/></svg>
+                <span>+40 742 294 901</span>
+            </div>
+            <div class="contact-item">
+                <svg class="contact-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                <a href="mailto:gabriela.raducan.freelancer@gmail.com">gabriela.raducan.freelancer@gmail.com</a>
+            </div>
+            <div class="contact-item">
+                <svg class="contact-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/></svg>
+                <span>Bucharest, Romania</span>
+            </div>
+            <div class="contact-item">
+                <svg class="contact-icon" viewBox="0 0 24 24"><path d="M19 3a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14m-.5 15.5v-5.3a3.26 3.26 0 00-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 011.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 001.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 00-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+                <a href="https://linkedin.com/in/gabriela-raducan" target="_blank">in/gabriela-raducan</a>
+            </div>
+            <div class="contact-item">
+                <svg class="contact-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                <span>Gabriela Raducan</span>
+            </div>
+        </div>
+
+        <hr class="sidebar-divider">
+
+        <div class="sidebar-section">
+            <h3>Skills</h3>
+            @php
+                $skills = [
+                    ['PHP', '15+ years'],
+                    ['PHPUnit', '8 years'],
+                    ['API-Platform', '6 years'],
+                    ['Doctrine', '6 years'],
+                    ['Symfony', '8 years'],
+                    ['Slim', '7 years'],
+                    ['Laravel', '5 years'],
+                    ['Eloquent', '5 years'],
+                    ['Microservices', '8 years'],
+                    ['Propel', '3 years'],
+                    ['Docker', '10 years'],
+                    ['GIT', '12 years'],
+                    ['SVN', '3 years'],
+                    ['Ubuntu', '15+ years'],
+                    ['MySQL', '15+ years'],
+                    ['PostgreSQL', '7 years'],
+                    ['JavaScript, jQuery', '9 years'],
+                    ['HTML & CSS', '8 years'],
+                ];
+            @endphp
+            @foreach ($skills as [$name, $years])
+                <div class="skill-item">
+                    <span class="skill-name">{{ $name }}</span>
+                    <span class="skill-years">{{ $years }}</span>
+                </div>
+            @endforeach
+        </div>
+
+        <hr class="sidebar-divider">
+
+        <div class="sidebar-section">
+            <h3>Education</h3>
+            <div class="education-entry">
+                <div class="school">Dunarea de Jos University</div>
+                <div class="degree">Master in Technologies and Applications</div>
+                <div class="year">Galati, 2010-2012</div>
+            </div>
+            <div class="education-entry">
+                <div class="school">Dunarea de Jos University</div>
+                <div class="degree">Bachelor of Computer Science</div>
+                <div class="year">Galati, 2006-2010</div>
+            </div>
+        </div>
+    </aside>
+
+    {{-- ── Main Content ── --}}
+    <main class="main-content">
+        <div class="name-header">
+            <h1><strong>Gabriela</strong> Raducan</h1>
+            <div class="subtitle">Senior PHP Developer &bull; Contractor &bull; Freelancer</div>
+        </div>
+
+        <h2 class="section-title">About Me</h2>
+        <div class="about-me">
+            <p>I am a Senior PHP Developer / Consultant / Contractor / Freelancer with <strong>15+ years of experience</strong>, interested only in remote work.</p>
+            <p>Software development has always been my passion and I enjoy using my skills solving real life problems for online businesses worldwide.</p>
+            <p>Lets get in touch if you think your organization could benefit from my expertise.</p>
+        </div>
+
+        <h2 class="section-title">Work Experience</h2>
+
+        {{-- Powercloud --}}
+        <div class="experience-entry">
+            <div class="experience-header">
+                <span class="role">Senior PHP Developer</span>
+                <span class="dates">Sept 2021 - Present</span>
+            </div>
+            <div class="experience-company">Powercloud (Germany)</div>
+            <div class="experience-description">
+                The client, Germany's leading SaaS platform for mid and back-office processes in the energy industry, was aiming to extend outside of Germany but was unable to do so due to their products not being adjusted for new countries.
+            </div>
+            <ul class="experience-highlights">
+                <li><strong>Decreased the new powercloud customer's total cost of ownership by up to 80%</strong> and reduced the cost to serve end-user customers from ~ &euro;30 to an average of just &euro;10 per end-user customer per year by extending the existing applications to cover energy processes and market communications for a new country.</li>
+                <li><strong>Secured 100% success</strong> in helping the client achieve its target by ensuring that their software products crossed the German borders.</li>
+            </ul>
+            <div class="experience-skills"><strong>Skills:</strong> PHP (7 & 8), api-platform, Doctrine, Symfony, PhpUnit, Psalm, PHPStan, PHP Code Sniffer, PHP Mess Detector, MySQL, Docker, GIT, Bitbucket, Jira, Jenkins, Kibana, Ubuntu</div>
+        </div>
+
+        {{-- Medicplan --}}
+        <div class="experience-entry">
+            <div class="experience-header">
+                <span class="role">Senior PHP Developer</span>
+                <span class="dates">Mar 2021 - Aug 2021</span>
+            </div>
+            <div class="experience-company">medicplan.ro (Romania)</div>
+            <div class="experience-description">
+                The client, a group of medical doctors, were aiming to help patients during the Covid19 pandemic, but were struggling to do so due to lacking a software product that would allow them to do so.
+            </div>
+            <ul class="experience-highlights">
+                <li><strong>Achieved 100% client satisfaction</strong> by creating a set of PHP based web applications (microservices) from scratch that made online appointments and patient management possible.</li>
+            </ul>
+            <div class="experience-skills"><strong>Skills:</strong> PHP 7, Slim 3, Monolog logger, PostgreSQL, Memcached, Guzzle HTTP, Symfony console, Phinx, PHPUnit, Swagger specs, GIT, GitLab, Jira, Ubuntu</div>
+        </div>
+
+        {{-- Jobshark --}}
+        <div class="experience-entry">
+            <div class="experience-header">
+                <span class="role">Senior PHP Developer</span>
+                <span class="dates">Oct 2020 - Mar 2021</span>
+            </div>
+            <div class="experience-company">Jobshark (Romania)</div>
+            <div class="experience-description">
+                The client, an outsourcing IT company with 200+ employees and a blooming projects portfolio, was struggling with filling up their open positions, and decided to resurrect their online recruitment platform that had been put on hold. However, the product was far from completion and the used technologies were outdated.
+            </div>
+            <ul class="experience-highlights">
+                <li><strong>Helped increase productivity by 25% (team of 6) and number of fixed bugs by 30%</strong> by developing new modules and contributing to existing ones.</li>
+            </ul>
+            <div class="experience-skills"><strong>Skills:</strong> PHP 7, Slim 3, Twig, MongoDB, MongoLog, Zend 4, Symfony console, ElasticSearch, Tactician, Memcached, RabbitMQ, Vagrant, Docker, Ubuntu, Git, GitLab</div>
+        </div>
+
+        {{-- Hellorider --}}
+        <div class="experience-entry">
+            <div class="experience-header">
+                <span class="role">Senior PHP Developer</span>
+                <span class="dates">Apr 2020 - Sept 2020</span>
+            </div>
+            <div class="experience-company">Hellorider (Netherlands)</div>
+            <div class="experience-description">
+                The client, a Netherlands-based company from the online bicycle market, was aiming to become the first bicycle retailer that would provide leasing services in the Netherlands, but was unable to achieve this goal due to lacking the necessary software product.
+            </div>
+            <ul class="experience-highlights">
+                <li><strong>Secured 100% success in helping the client achieve its target, ensuring that it was the 1st company to provide these kinds of services</strong> by developing various PHP based microservices.</li>
+                <li>Employers could offer a suitable bicycle plan to their employees and <strong>employees could save up to 40%</strong> compared to buying a bicycle.</li>
+            </ul>
+            <div class="experience-skills"><strong>Skills:</strong> Docker, PHP 7, Slim 3, Monolog logger, PostgreSQL, Guzzle HTTP, Symfony console, Phinx, PHPUnit, Swagger specs, GIT, GitLab, Ubuntu, Jira</div>
+        </div>
+
+        {{-- Fietsenwinkel --}}
+        <div class="experience-entry">
+            <div class="experience-header">
+                <span class="role">Senior PHP Developer</span>
+                <span class="dates">Feb 2019 - Mar 2020</span>
+            </div>
+            <div class="experience-company">Fietsenwinkel (Netherlands)</div>
+            <div class="experience-description">
+                The client, the largest online bicycle retailer in the Netherlands, was wasting a great deal of time, and therefore money, due to lacking automatization in business processes.
+            </div>
+            <ul class="experience-highlights">
+                <li><strong>Achieved 100% business automatization</strong> by developing various PHP based web applications (microservices), such as a repairs app, an assembly instructions app and a warehouse management app.</li>
+                <li><strong>Reduced time spent between receiving a bike in service and returning it to the owner by 35%</strong>, while increasing customer satisfaction by 65% and reducing delivery time by 20%, using the latest PHP related tools and frameworks.</li>
+            </ul>
+            <div class="experience-skills"><strong>Skills:</strong> Docker, PHP 7, Slim 3, Monolog logger, PostgreSQL, Guzzle HTTP, Proprietary queue task manager, Symfony console, Phinx, PHPUnit, Swagger specs, GIT, GitLab, Ubuntu, Jira</div>
+        </div>
+
+        {{-- Ticketscript --}}
+        <div class="experience-entry">
+            <div class="experience-header">
+                <span class="role">Senior PHP Developer</span>
+                <span class="dates">Oct 2014 - Mar 2017</span>
+            </div>
+            <div class="experience-company">Ticketscript (Netherlands)</div>
+            <div class="experience-description">
+                The client, a Netherlands-based company providing a self-service event ticketing software, was being overstepped by new technologies, due to reaching a certain age and being outdated.
+            </div>
+            <ul class="experience-highlights">
+                <li><strong>Increased the client's revenue by 30%</strong> in under 6 months by improving existing products via V2 implementation that provided software for event organizers to fully set up a ticketed event, promote and sell tickets online through their own websites, social media channels, affiliated partner sites and at the door.</li>
+                <li><strong>The product offered entry management tools providing event organizers with live data, sales statistics and reporting tools directly from their computers, mobile devices and smartphones.</strong> As a result, the company was acquired by Eventbrite, an American event management and ticketing website that managed to expand its business in Europe through this acquisition.</li>
+            </ul>
+            <div class="experience-skills"><strong>Skills:</strong> PHP 7, Zend, Propel, MySQL, VirtualBox virtual machine provisioned with Chef through Vagrant and later on - Docker, Jira, GIT, GitHub, Ubuntu</div>
+        </div>
+
+        {{-- Cloudwalkers --}}
+        <div class="experience-entry">
+            <div class="experience-header">
+                <span class="role">PHP Developer</span>
+                <span class="dates">Mar 2014 - Sept 2014</span>
+            </div>
+            <div class="experience-company">Cloudwalkers (Denmark)</div>
+            <div class="experience-description">
+                The client, a Denmark-based company, was dealing with not enough development power for its soon-to-be product, a web-based social networks aggregator.
+            </div>
+            <ul class="experience-highlights">
+                <li><strong>Achieved 60% of the software development needed for V1</strong> (before the project was shot down due to lack of funds) by implementing Facebook, LinkedIn and Twitter integrations, and the main feature - posting on all social media platforms at once, and posts management from a central point.</li>
+            </ul>
+            <div class="experience-skills"><strong>Skills:</strong> PHP, Laravel, Eloquent, MySQL, GIT, GitHub, Ubuntu</div>
+        </div>
+
+        {{-- Timessnewroman --}}
+        <div class="experience-entry">
+            <div class="experience-header">
+                <span class="role">PHP Developer</span>
+                <span class="dates">Dec 2013 - Feb 2014</span>
+            </div>
+            <div class="experience-company">Timessnewroman.ro (Romania)</div>
+            <div class="experience-description">
+                The client, a web-based independent satirical newspaper, was struggling to further develop their platform and was dealing with bugs due to lacking development power.
+            </div>
+            <ul class="experience-highlights">
+                <li><strong>Reduced the time needed to post articles by 30%</strong> due to admin panel and db interaction improvements, and increased the number of viewers by 20% thanks to new marketing related modules. Also, contributed to module development, bug fixing, future enhancement and core refactoring.</li>
+            </ul>
+            <div class="experience-skills"><strong>Skills:</strong> Karybu (open-source CMS based on Symfony Framework and Bootstrap frontend that can be based on multiple types of databases), PHP, JavaScript, Cubrid DB, GIT, GitHub</div>
+        </div>
+
+        {{-- Wind River Systems --}}
+        <div class="experience-entry">
+            <div class="experience-header">
+                <span class="role">PHP Developer</span>
+                <span class="dates">Jul 2013 - Dec 2013</span>
+            </div>
+            <div class="experience-company">Wind River Systems (US-RO)</div>
+            <div class="experience-description">
+                The client, an Alameda, California-based company developing embedded systems and cloud software, was aiming to develop an increased amount of features for one of their internal management tools but was struggling to do so, due to lacking sufficient manpower.
+            </div>
+            <ul class="experience-highlights">
+                <li><strong>Achieved 100% client satisfaction</strong> by improving existing modules and developing new ones, by using a custom framework. Also, ensured that the product was able to track various items such as contracts, clients, resources, assignments, vacations and metrics.</li>
+                <li><strong>Improved server response time improved by up to 30%</strong>, according to project managers and upper management, and increased their own productivity by 35% by providing quality on-demand functionalities.</li>
+            </ul>
+            <div class="experience-skills"><strong>Skills:</strong> PHP, MySQL, JavaScript, jQuery, CSS, HTML, SVN, Ubuntu</div>
+        </div>
+
+        {{-- WindRiver (earlier role) --}}
+        <div class="experience-entry">
+            <div class="experience-header">
+                <span class="role">PHP Developer</span>
+                <span class="dates">Mar 2011 - May 2013</span>
+            </div>
+            <div class="experience-company">WindRiver (US-RO)</div>
+            <div class="experience-description">
+                The client, leading provider of embedded systems and cloud software, was aiming to develop an increased amount of features for one of their internal management tools but was struggling to do so, due to lacking sufficient manpower.
+            </div>
+            <ul class="experience-highlights">
+                <li><strong>Achieved 100% client satisfaction</strong> by improving existing modules and developing new ones, by using a custom framework.</li>
+                <li><strong>Reduced execution time by up to 40%</strong> for their product, an internal tracker used for bugs, issues, tests and test runs, by improving the filtering system. Also, developed a new roles-permissions logic that allowed more accurate tracking and reduced accidents that involved sensitive information.</li>
+            </ul>
+            <div class="experience-skills"><strong>Skills:</strong> PHP, MySQL, JavaScript, jQuery, CSS, HTML, SVN, Ubuntu</div>
+        </div>
+    </main>
+</div>
+@endsection

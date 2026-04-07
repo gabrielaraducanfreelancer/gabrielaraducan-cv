@@ -407,11 +407,29 @@
 
         <h2 class="section-title">Work Experience</h2>
 
+        {{-- FiscFree --}}
+        <div class="experience-entry">
+            <div class="experience-header">
+                <span class="role">Senior PHP Developer</span>
+                <span class="dates">Apr 2025 - Jan 2026</span>
+            </div>
+            <div class="experience-company">FiscFree (Netherlands)</div>
+            <div class="experience-description">
+                The client, a Netherlands-based company, was planning to develop a modern web platform that offers companies the opportunity to provide employees with additional benefits through tax advantages.
+            </div>
+            <ul class="experience-highlights">
+                <li><strong>Developed a modern, scalable platform</strong> designed to facilitate employees' legal tax-free spending options. This project involved rewriting their legacy system from scratch, ensuring enhanced security, performance, and user experience.</li>
+                <li><strong>Built an intuitive, responsive interface</strong> for both company administrators and employees. Backend powered by PostgreSQL, ensuring robust data integrity and scalability. Docker containers were utilized for streamlined deployment and environment consistency across development, staging, and production.</li>
+                <li><strong>Designed and implemented core functionalities</strong>, integrated secure voucher management, and optimized workflows for compliance with Dutch tax regulations.</li>
+            </ul>
+            <div class="experience-skills"><strong>Skills:</strong> PHP, Laravel, Filament, PostgreSQL, Docker</div>
+        </div>
+
         {{-- Powercloud --}}
         <div class="experience-entry">
             <div class="experience-header">
                 <span class="role">Senior PHP Developer</span>
-                <span class="dates">Sept 2021 - Present</span>
+                <span class="dates">Sept 2021 - May 2023</span>
             </div>
             <div class="experience-company">Powercloud (Germany)</div>
             <div class="experience-description">
